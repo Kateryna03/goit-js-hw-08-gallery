@@ -67,7 +67,32 @@ function clickOnOverlayToCloseImg(e) {
     imageRef.src = "";
   }
 }
-//console.log(createGallery(imagesArray));
+
+window.addEventListener("keydown", clickOnArrowLeftRight);
+
+//Пролистывание изображений галереи в открытом модальном окне клавишами "влево" и "вправо".
+
+function clickOnArrowLeftRight(e) {
+  let index;
+  const activeImage = imagesArray.findIndex(
+    (img) => img.original === imageRef.src
+  );
+  if (e.code === "ArrowLeft") {
+    index = activeImage - 1;
+    if (index === -1) {
+      index = imagesArray.length - 1;
+    }
+  } else if (e.code === "ArrowRight") {
+    index = activeImage + 1;
+    if (index === imagesArray.length) {
+      index = 0;
+    }
+  }
+
+  imageRef.src = imagesArray[index].original;
+  imageRef.alt = imagesArray[index].alt;
+}
+
 // Создание и рендер разметки по массиву данных и предоставленному шаблону.
 // Реализация делегирования на галерее ul.js-gallery и получение url большого изображения.
 // Открытие модального окна по клику на элементе галереи.
